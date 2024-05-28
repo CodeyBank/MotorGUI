@@ -1,6 +1,7 @@
 #include "appmanger.h"
 
 #include <QCoreApplication>
+#include <QRegularExpressionValidator>
 
 QString AppManger::getRemoteIPAddr() const
 {
@@ -126,22 +127,22 @@ void AppManger::updateVariableView(QString record_name)
 
 bool AppManger::isValidPort(QString str_port)
 {
-    int pos = 0;
-    QValidator *portValidator = new QIntValidator(1,65535,this);
+     int pos = 0;
+     QValidator *portValidator = new QIntValidator(1,65535,this);
     bool result = false;
-    if(portValidator->validate(str_port,pos)==2)
-    {
-        qInfo()<<"Valid port";
-        result = true;
-    }
-    delete portValidator;
+     if(portValidator->validate(str_port,pos)==2)
+     {
+         qInfo()<<"Valid port";
+         result = true;
+     }
+     delete portValidator;
     return result;
 }
 
 bool AppManger::isValidIPAddress(QString str_ipAddr)
 {
 
-    bool valid=false;
+    bool valid=true;
     int pos;
     QString IpRange = "(?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])";
     QRegularExpression IpRegex ("^" + IpRange

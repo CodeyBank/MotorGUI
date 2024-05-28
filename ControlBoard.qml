@@ -17,6 +17,7 @@ Item {
 
     Rectangle {
         id: rectangle
+        color: "#025346"
         gradient: Gradient{
             GradientStop {position: 0.0; color: "#025346"}
             GradientStop {position: 0.8; color: "#011512"}

@@ -54,23 +54,10 @@
         <file>images/svg_images/icons8-offline-100.png</file>
         <file>images/svg_images/icons8-wi-fi.gif</file>
         <file>images/svg_images/icons8-online-100.png</file>
-    </qresource>
-    <qresource prefix="/mcat">
-        <file>mcat/freemaster-client.js</file>
-        <file>mcat/index.html</file>
-        <file>mcat/init.js</file>
-        <file>mcat/m1_pmsm_appconfig.h</file>
-        <file>mcat/simple-jsonrpc-js.js</file>
-        <file>mcat/assets/future-logo.ico</file>
-        <file>mcat/assets/nxp-logo-small-121x52.png</file>
-        <file>mcat/assets/NXP_logo_RGB_web.jpg</file>
-        <file>mcat/assets/speedfocwolswbemf.gif</file>
-        <file>mcat/css/app.css</file>
-        <file>mcat/js/chunk.js</file>
-        <file>mcat/js/chunk.js.map</file>
-        <file>mcat/js/mcat.js</file>
-        <file>mcat/js/mcat.js.map</file>
-        <file>mcat/license/LA_OPT_NXP_Software_License.txt</file>
-        <file>mcat/license/SW-Content-Register.txt</file>
+        <file>images/svg_images/speedfocwolswbemf.gif</file>
+        <file>images/svg_images/speed3.png</file>
+        <file>images/svg_images/speed2.png</file>
+        <file>images/svg_images/speed.png</file>
+        <file>images/svg_images/future-logo1.png</file>
     </qresource>
 </RCC>

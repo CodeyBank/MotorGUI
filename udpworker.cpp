@@ -47,9 +47,9 @@ void UDPWorker::start()
 void UDPWorker::stop()
 {
     if(udp_timer->isActive())udp_timer->stop();
-    udp_socket->close();
-    m_variableValueMap.clear();
-    m_variable_names.clear();
+    if(udp_socket->isOpen()) udp_socket->close();
+//    m_variableValueMap.clear();
+//    m_variable_names.clear();
 
     qInfo()<<"Closed socket and stopped timer";
 }

@@ -11,6 +11,7 @@
 #include <QProcess>
 #include <QSettings>
 #include <QDir>
+#include <QIntValidator>
 
 
 class AppManger : public QObject
