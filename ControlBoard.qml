@@ -48,14 +48,13 @@ Item {
                 Layout.preferredWidth: 50
                 Layout.leftMargin: 10
                 radius: 50
-
-
                 Image {
                     id: image
                     anchors.fill: parent
                     source: pendingfault ? "qrc:/images/images/svg_images/icons8-error-64.png" :"qrc:/images/images/svg_images/icons8-ok-48.png"
                     fillMode: Image.PreserveAspectFit
                 }
+
             }
 
             RoundButton {
@@ -71,7 +70,7 @@ Item {
                 Layout.fillWidth: true
                 // onClicked:
                 onClicked:{
-
+                    udpworker.sendCommandToMCU(objectName, mappedVariable)
                 }
             }
 
@@ -85,13 +84,12 @@ Item {
                 font.family: "Courier"
                 Layout.preferredWidth: 80
                 Layout.fillWidth: true
-                width: 160
                 indicator: Rectangle {
                      implicitWidth: 48
                      implicitHeight: 26
                      x: startStopSw.leftPadding
                      y: parent.height / 2 - height / 2
-                     width: 90
+                     width: 120
                      height: 40
                      radius: 20
                      color: startStopSw.checked ? "#02231f" : "#ffffff"
@@ -108,7 +106,7 @@ Item {
                 }
 
                 contentItem: Text {
-                    text: startStopSw.checked? "Start" : "Stop"
+                    text: startStopSw.checked? "Start Live Update" : "Stop Live Update"
                     font: startStopSw.font
                     opacity: enabled ? 1.0 : 0.3
                     color: "#ebf5eb"
@@ -128,15 +126,16 @@ Item {
                 color: "white"
                 placeholderText:  qsTr("Enter speed!")
                 font.pixelSize: 17
-                Layout.preferredWidth: 120
-                Layout.maximumWidth: 150
+                Layout.preferredWidth: 180
+                Layout.preferredHeight: 50
+                Layout.maximumWidth: 180
                 Layout.minimumWidth: 80
                 font.family: "Courier"
                 Layout.fillWidth: true
                 focus: false
                 background: Rectangle{
                     anchors.fill: parent
-                    radius: 20
+                    radius: 25
                     color: "#02231f"
                     border.width: 1
                     border.color: "white"
@@ -145,47 +144,6 @@ Item {
                 onAccepted: {
                     udpworker.sendCommandToMCU(objectName, text)
                 }
-            }
-
-            Switch {
-                property string mappedVariable : ""
-                id: directionSw
-                objectName: "directionSw"
-                width: 160
-                // text: directionSwitch
-                display: AbstractButton.TextUnderIcon
-                indicator: Rectangle {
-                    x: directionSw.leftPadding
-                    y: parent.height / 2 - height / 2
-                    width: 90
-                    height: 40
-                    color: directionSw.checked ? "#02231f" : "#ffffff"
-                    radius: 20
-                    border.color: directionSw.checked ? "#02231f" : "#cccccc"
-                    Rectangle {
-                        x: directionSw.checked ? parent.width - width : 0
-                        width: 40
-                        height: 40
-                        color: directionSw.down ? "#cccccc" : "#ffffff"
-                        radius: 20
-                        border.color: directionSw.checked ? (directionSw.down ? "#17a81a" : "#21be2b") : "#999999"
-                    }
-                    implicitHeight: 26
-                    implicitWidth: 48
-                }
-//                font.pointSize: 10
-                Layout.preferredWidth: 80
-                font.family: "Courier"
-                contentItem: Text {
-                    opacity: enabled ? 1.0 : 0.3
-                    color: "#ebf5eb"
-                    text: directionSw.checked ? "Forward" : "Backward"
-                    verticalAlignment: Text.AlignVCenter
-//                    font.pointSize: 11
-                    font: directionSw.font
-                    leftPadding: directionSw.indicator.width + directionSw.spacing
-                }
-                Layout.fillWidth: true
             }
 
             Rectangle {

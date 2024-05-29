@@ -6,8 +6,8 @@ QT += quick gui core
 
 SOURCES += \
         appmanger.cpp \
-        #bindingitem.cpp \
-        #bindingmodel.cpp \
+        bindingitem.cpp \
+        bindingmodel.cpp \
         customdatamodel.cpp \
         main.cpp \
         memorymodel.cpp \
@@ -36,8 +36,8 @@ DISTFILES +=
 
 HEADERS += \
     appmanger.h \
-    #bindingitem.h \
-    #bindingmodel.h \
+    bindingitem.h \
+    bindingmodel.h \
     customdatamodel.h \
     memorymodel.h \
     modelmanager.h \

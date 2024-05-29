@@ -1,5 +1,4 @@
 #include "bindingmodel.h"
-#include "seprotocol.h"
 
 BindingModel::BindingModel(QObject *parent) : QAbstractListModel(parent)
 {
@@ -22,7 +21,7 @@ int BindingModel::columnCount(const QModelIndex &parent) const
     if(parent.isValid()){
         return 0;
     }
-    return 6;
+    return 3;
 }
 
 
@@ -36,11 +35,11 @@ QVariant BindingModel::data(const QModelIndex &index, int role) const
     BindingItem *item = m_data.at(index.row());
     switch (role) {
     case NameRole:
-        return item->objName();
-    case AttributeRole:
-        return item->attribute();
-    case NameRole:
-        return item->value();
+        return item->name();
+    case TagRole:
+        return item->tag();
+    case ReadWriteRole:
+        return item->readWrite();
     default:
         return QVariant();
     }
@@ -55,31 +54,31 @@ QHash<int, QByteArray> BindingModel::roleNames() const
     return roles;
 }
 
-void BindingModel::updateData(const QString &name,
-                             const qint32 &address,
-                             const quint8 &attribute)
+void BindingModel::addBinding(const QString &name,
+                   const QString &tag,
+                   const QString &readwrite)
 {
 
-    BindingItem *data = new BindingItem();
-    data->setName(name);
+    /*
+        Before adding the binding to the list, check if it already exists
+        if it does call, modifyBinding API
+    */
 
-    qInfo()<<"toconvert attribute: "<<attribute;
-    QString attr = convertAttribute_ToString(attribute);
-    qInfo()<<"Converted attribute: "<<attr;
-    data->setAttribute(attr);
+    for(int idx{}; idx<m_data.size(); idx++){
+        auto item = m_data[idx];
+        if (item->name() == name){
+            modifyBinding(idx, name, tag,readwrite);
+            return;
+        }
+    }
 
-    data->setValue(value);
-
-    QString hexAddress = QString("%1").arg(address, 2, 16, QLatin1Char('0'));
-    data->setAddress("0x"+hexAddress);
-    data->setSize(size);
-
-    QString tp = convertDT_MAP_ToString(type);
-    qInfo()<<"Converted type: "<<tp;
-    data->setType(tp);
+    BindingItem *newBinding = new BindingItem();
+    newBinding->setName(name);
+    newBinding->setTag(tag);
+    newBinding->setReadWrite(readwrite);
 
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
-    m_data.append(data);
+    m_data.append(newBinding);
     endInsertRows();
 
     // Emit dataChanged signal for all roles for the newly inserted row
@@ -104,19 +103,26 @@ QModelIndex BindingModel::parent(const QModelIndex &index) const
     return QModelIndex(); // This model does not have hierarchical data, so the parent is always invalid
 }
 
-// void BindingModel::modifyData(int row, const QString &name, const QString &attribute, const QString &value)
-// {
-//     if (row < 0 || row >= m_data.size()) {
-//         return; // Row index out of bounds
-//     }
+void BindingModel::modifyBinding(int row,
+                              const QString &name,
+                              const QString &tag,
+                              const QString &readwrite)
+{
+    if (row < 0 || row >= m_data.size()) {
+        return; // Row index out of bounds
+    }
 
-//     SE_MemoryRecord *data = m_data.at(row);
-//     data->setName(name);
-//     data->setAttribute(attribute);
-//     data->setValue(value);
+    BindingItem *item = m_data.at(row);
+    item->setName(name);
+    item->setTag(tag);
+    item->setReadWrite(readwrite);
 
-//     QModelIndex topLeft = index(row, 0);
-//     // QModelIndex bottomRight = index(row, columnCount() - 1, QModelIndex());
-//     QVector<int> roles = {NameRole, AttributeRole, ValueRole};
-//     // emit dataChanged(topLeft, bottomRight, roles);
-// }
+    QModelIndex topLeft = index(row, 0);
+    QModelIndex bottomRight = index(row, columnCount() - 1, QModelIndex());
+    QVector<int> roles = {NameRole, TagRole, ReadWriteRole};
+    emit dataChanged(topLeft, bottomRight, roles);
+}
+
+
+
+

@@ -7,11 +7,11 @@ import QtQuick.Controls 1.4 as C14
 Item {
     id:root
     property alias varlist : tagComboBox
-    property alias objList : comboBox
+    property alias guiObjComboBox : guiObjComboBox
     property alias bind : roundButton
-    property alias write :radioButton4
+    property alias write :writeRadioButton
     property alias read :readbtn
-
+    property alias unused : unusedRadioBtn
     Rectangle {
         id: rectangle
         color: "#ebebeb"
@@ -37,18 +37,21 @@ Item {
 
                         anchors.fill: parent
                         anchors.margins: 10
-                        model:memorymodel
+                        model:bindingmodel
                         C14.TableViewColumn {
                             title: "TagName"
-                            role: "name"
+                            role: "tag"
+                            width: listviewContainer.width/3
                         }
                         C14.TableViewColumn {
                             title: "GUI Object id"
-                            role: "objid"
+                            role: "name"
+                            width: listviewContainer.width/3
                         }
                         C14.TableViewColumn {
                             title: "Type"
-                            role: "type"
+                            role: "readwrite"
+                            width: listviewContainer.width/3
                         }
 
                    }
@@ -71,7 +74,7 @@ Item {
                     anchors.leftMargin: parent.width * 0.1
 
                     ComboBox {
-                        id: comboBox
+                        id: guiObjComboBox
                         width: parent.width * 0.80
                         height: 25
                         // anchors.top: parent.top
@@ -88,27 +91,27 @@ Item {
                         displayText: "Select GUI Control Object"
 
                         delegate: ItemDelegate {
-                                width: comboBox.width
+                                width: guiObjComboBox.width
                                 contentItem: Text {
                                     text: modelData
                                     color: "#21be2b"
-                                    font: comboBox.font
+                                    font: guiObjComboBox.font
                                     elide: Text.ElideRight
                                     verticalAlignment: Text.AlignVCenter
                                 }
-                                highlighted: comboBox.highlightedIndex === index
+                                highlighted: guiObjComboBox.highlightedIndex === index
                             }
 
                             indicator: Canvas {
                                 id: canvas
-                                x: comboBox.width - width - comboBox.rightPadding
-                                y: comboBox.topPadding + (comboBox.availableHeight - height) / 2
+                                x: guiObjComboBox.width - width - guiObjComboBox.rightPadding
+                                y: guiObjComboBox.topPadding + (guiObjComboBox.availableHeight - height) / 2
                                 width: 12
                                 height: 8
                                 contextType: "2d"
 
                                 Connections {
-                                    target: comboBox
+                                    target: guiObjComboBox
                                     function onPressedChanged() { canvas.requestPaint(); }
                                 }
 
@@ -118,18 +121,18 @@ Item {
                                     context.lineTo(width, 0);
                                     context.lineTo(width / 2, height);
                                     context.closePath();
-                                    context.fillStyle = comboBox.pressed ? "#17a81a" : "#21be2b";
+                                    context.fillStyle = guiObjComboBox.pressed ? "#17a81a" : "#21be2b";
                                     context.fill();
                                 }
                             }
 
                             contentItem: Text {
                                 leftPadding: 0
-                                rightPadding: comboBox.indicator.width + comboBox.spacing
+                                rightPadding: guiObjComboBox.indicator.width + guiObjComboBox.spacing
 
-                                text: comboBox.displayText
-                                font: comboBox.font
-                                color: comboBox.pressed ? "black" : "black"
+                                text: guiObjComboBox.displayText
+                                font: guiObjComboBox.font
+                                color: guiObjComboBox.pressed ? "black" : "black"
                                 verticalAlignment: Text.AlignVCenter
                                 elide: Text.ElideRight
                             }
@@ -137,22 +140,22 @@ Item {
                             background: Rectangle {
                                 implicitWidth: 120
                                 implicitHeight: 40
-                                border.color: comboBox.pressed ? "#17a81a" : "#21be2b"
-                                border.width: comboBox.visualFocus ? 2 : 1
+                                border.color: guiObjComboBox.pressed ? "#17a81a" : "#21be2b"
+                                border.width: guiObjComboBox.visualFocus ? 2 : 1
                                 radius: 2
                             }
 
                             popup: Popup {
-                                y: comboBox.height - 1
-                                width: comboBox.width
+                                y: guiObjComboBox.height - 1
+                                width: guiObjComboBox.width
                                 implicitHeight: 150
                                 padding: 1
 
                                 contentItem: ListView {
                                     clip: true
                                     implicitHeight: contentHeight
-                                    model: comboBox.popup.visible ? comboBox.delegateModel : null
-                                    currentIndex: comboBox.highlightedIndex
+                                    model: guiObjComboBox.popup.visible ? guiObjComboBox.delegateModel : null
+                                    currentIndex: guiObjComboBox.highlightedIndex
 
                                     ScrollIndicator.vertical: ScrollIndicator { }
                                 }
@@ -305,7 +308,7 @@ Item {
                         }
 
                         RadioButton {
-                            id: radioButton2
+                            id: unusedRadioBtn
                             text: qsTr("Unused")
                             Layout.preferredWidth: 100
                             Layout.preferredHeight: 30
@@ -315,7 +318,7 @@ Item {
                         }
 
                         RadioButton {
-                            id: radioButton4
+                            id: writeRadioButton
                             text: qsTr("Write")
                             Layout.preferredWidth: 100
                             Layout.preferredHeight: 30

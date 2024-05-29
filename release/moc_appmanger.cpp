@@ -23,8 +23,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_AppManger_t {
-    QByteArrayData data[33];
-    char stringdata0[518];
+    QByteArrayData data[34];
+    char stringdata0[529];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -60,12 +60,13 @@ QT_MOC_LITERAL(23, 365, 12), // "saveSettings"
 QT_MOC_LITERAL(24, 378, 21), // "setAllAddressAndPorts"
 QT_MOC_LITERAL(25, 400, 22), // "QList<QList<QString> >"
 QT_MOC_LITERAL(26, 423, 16), // "config_addresses"
-QT_MOC_LITERAL(27, 440, 9), // "heartbeat"
-QT_MOC_LITERAL(28, 450, 15), // "localinterfaces"
-QT_MOC_LITERAL(29, 466, 14), // "localIPAddress"
-QT_MOC_LITERAL(30, 481, 9), // "localPort"
-QT_MOC_LITERAL(31, 491, 15), // "remoteIPAddress"
-QT_MOC_LITERAL(32, 507, 10) // "remotePort"
+QT_MOC_LITERAL(27, 440, 10), // "disconnect"
+QT_MOC_LITERAL(28, 451, 9), // "heartbeat"
+QT_MOC_LITERAL(29, 461, 15), // "localinterfaces"
+QT_MOC_LITERAL(30, 477, 14), // "localIPAddress"
+QT_MOC_LITERAL(31, 492, 9), // "localPort"
+QT_MOC_LITERAL(32, 502, 15), // "remoteIPAddress"
+QT_MOC_LITERAL(33, 518, 10) // "remotePort"
 
     },
     "AppManger\0remoteHeartBeatChanged\0\0"
@@ -79,9 +80,9 @@ QT_MOC_LITERAL(32, 507, 10) // "remotePort"
     "QList<QString>\0getIpAddressByInterfaceName\0"
     "interfaceName\0loadSettings\0saveSettings\0"
     "setAllAddressAndPorts\0QList<QList<QString> >\0"
-    "config_addresses\0heartbeat\0localinterfaces\0"
-    "localIPAddress\0localPort\0remoteIPAddress\0"
-    "remotePort"
+    "config_addresses\0disconnect\0heartbeat\0"
+    "localinterfaces\0localIPAddress\0localPort\0"
+    "remoteIPAddress\0remotePort"
 };
 #undef QT_MOC_LITERAL
 
@@ -91,33 +92,34 @@ static const uint qt_meta_data_AppManger[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      17,   14, // methods
-       6,  128, // properties
+      18,   14, // methods
+       6,  134, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        6,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   99,    2, 0x06 /* Public */,
-       4,    0,  102,    2, 0x06 /* Public */,
-       5,    0,  103,    2, 0x06 /* Public */,
-       6,    0,  104,    2, 0x06 /* Public */,
-       7,    0,  105,    2, 0x06 /* Public */,
-       8,    0,  106,    2, 0x06 /* Public */,
+       1,    1,  104,    2, 0x06 /* Public */,
+       4,    0,  107,    2, 0x06 /* Public */,
+       5,    0,  108,    2, 0x06 /* Public */,
+       6,    0,  109,    2, 0x06 /* Public */,
+       7,    0,  110,    2, 0x06 /* Public */,
+       8,    0,  111,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       9,    0,  107,    2, 0x0a /* Public */,
-      10,    0,  108,    2, 0x0a /* Public */,
-      11,    0,  109,    2, 0x0a /* Public */,
-      12,    1,  110,    2, 0x0a /* Public */,
-      14,    1,  113,    2, 0x0a /* Public */,
-      16,    1,  116,    2, 0x0a /* Public */,
-      18,    0,  119,    2, 0x0a /* Public */,
-      20,    1,  120,    2, 0x0a /* Public */,
-      22,    0,  123,    2, 0x0a /* Public */,
-      23,    0,  124,    2, 0x0a /* Public */,
-      24,    1,  125,    2, 0x0a /* Public */,
+       9,    0,  112,    2, 0x0a /* Public */,
+      10,    0,  113,    2, 0x0a /* Public */,
+      11,    0,  114,    2, 0x0a /* Public */,
+      12,    1,  115,    2, 0x0a /* Public */,
+      14,    1,  118,    2, 0x0a /* Public */,
+      16,    1,  121,    2, 0x0a /* Public */,
+      18,    0,  124,    2, 0x0a /* Public */,
+      20,    1,  125,    2, 0x0a /* Public */,
+      22,    0,  128,    2, 0x0a /* Public */,
+      23,    0,  129,    2, 0x0a /* Public */,
+      24,    1,  130,    2, 0x0a /* Public */,
+      27,    0,  133,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QVariant,    3,
@@ -139,14 +141,15 @@ static const uint qt_meta_data_AppManger[] = {
     QMetaType::Bool,
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 25,   26,
+    QMetaType::Void,
 
  // properties: name, type, flags
-      27, QMetaType::Bool, 0x00495801,
-      28, 0x80000000 | 19, 0x00495809,
-      29, QMetaType::QString, 0x00495803,
-      30, QMetaType::Short, 0x00495803,
-      31, QMetaType::QString, 0x00495803,
-      32, QMetaType::Short, 0x00495903,
+      28, QMetaType::Bool, 0x00495801,
+      29, 0x80000000 | 19, 0x00495809,
+      30, QMetaType::QString, 0x00495803,
+      31, QMetaType::Short, 0x00495803,
+      32, QMetaType::QString, 0x00495803,
+      33, QMetaType::Short, 0x00495903,
 
  // properties: notify_signal_id
        0,
@@ -187,6 +190,7 @@ void AppManger::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
         case 15: _t->saveSettings(); break;
         case 16: _t->setAllAddressAndPorts((*reinterpret_cast< QList<QList<QString> >(*)>(_a[1]))); break;
+        case 17: _t->disconnect(); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -311,13 +315,13 @@ int AppManger::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 17)
+        if (_id < 18)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 17;
+        _id -= 18;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 17)
+        if (_id < 18)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 17;
+        _id -= 18;
     }
 #ifndef QT_NO_PROPERTIES
     else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty

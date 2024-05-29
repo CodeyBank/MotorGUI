@@ -9,7 +9,7 @@ import com.futureelctronics.appmanager 1.0
 import com.futureelctronics.udpworker 1.0
 import com.futureelctronics.memorymodel 1.0
 import com.futureelctronics.modelmanager 1.0
-
+import com.futureelctronics.bindingmodel 1.0
 
 
 ApplicationWindow {
@@ -29,7 +29,8 @@ ApplicationWindow {
     property string varguage6: "dummy"
     property string varguage7: "dummy"
     property string sguage: "dummy"
-    property string fault: "dummy"
+    property string fault: "false"
+
 
     // Window properties. 0 means the window isnt maximized
     property int windowStatus: 0
@@ -106,7 +107,6 @@ ApplicationWindow {
 
             if(item.objectName !=="" ){
                 result.push(item.objectName) // Add the current item's objectName to the result
-
             }
                 // Recurse into child items
                 for (var i = 0; i < item.children.length; ++i) {
@@ -114,7 +114,7 @@ ApplicationWindow {
                 }
 
                 return result
-            }
+        }
 
         function findChild(rootItem, name){
 
@@ -157,27 +157,35 @@ ApplicationWindow {
 
     UDPWorker{
         id: udpworker
+
+        /*
+            If the UDP worker receives a new value for a variable, update the memory model.
+            MemoryModel is bound to the table
+        */
         onNewDataReceived: {
             memorymodel.updateData(data.name, data.address, data.attribute, data.type, data.size, 0);
         }
 
+        /*
+            If the UDP worker receives a new value for a variable and needs to modify the current value,
+            update the memory model. MemoryModel is bound to the table
+        */
         onModifiedDataReceived: {
             memorymodel.modifyData(data.name, data.address, data.attribute,data.type, data.size, data.value);
         }
+
+        /* Update the list of variables available on the frontend ComboBox immediately a
+        new variable is received via UDP
+        */
         onVariableListChanged: {
             internal.loadItems(tagbindings.varlist, udpworker.variablelist)
         }
 
-        onVmapChanged: {
-            // var v = udpworker.vmap
-        }
 
-        onNewVariableRecieved: {
-            // console.log("Received new variable " + variable)
-           // obj = variableManager.get(variable)
-           // console.log("Model manager returned " + obj)
-        }
-
+        /*
+            Bindings to update GUI guages in Dashboard onUpdateVariableData:
+            Update the guages if there is a new value.
+        */
         onUpdateVariableData: {
             console.log("Received new value for "+ variable +"value "+ value)
             variableManager.update(variable, value)
@@ -189,9 +197,11 @@ ApplicationWindow {
             dashboard.g6.measuredvalue = internal.formatValue(variableManager.get(varguage6))
             dashboard.g7.measuredvalue =internal.formatValue(variableManager.get(varguage7))
             dashboard.g4.measuredvalue = internal.formatValue(variableManager.get(varguage4))/10
+            dashboard.control.pendingfault = variableManager.get(fault)
         }
     }
 
+    // instantiate Model to be used for table
     ModelManager{
         id: variableManager
     }
@@ -201,6 +211,14 @@ ApplicationWindow {
         id: memorymodel
     }
 
+    /*
+        BindingModel controls how the TagBindings table is updated or modified
+    */
+    BindingModel{
+        id: bindingmodel
+    }
+
+    // Instantiate Application Manger object
     AppManger{
         id: appmanager
         onRemoteHeartBeatChanged:  {
@@ -208,14 +226,15 @@ ApplicationWindow {
             dashboard.control.connected = appmanager.heartbeat
             dashboard.enabled = appmanager.heartbeat
             networkPage.connect.enabled =appmanager.heartbeat
-            networkPage.disconnect.enabled = appmanager.heartbeat
+            // networkPage.disconnect.enabled = appmanager.heartbeat
+            tagbindings.enabled = appmanager.heartbeat
         }
 
+        // Load all the local interfaces availanle on the machine
         onLocalinterfacesChanged: {
             // console.log("Interface changed emitted")
             internal.loadItems(networkPage.intLocalComboBox, appmanager.localinterfaces)
         }
-
     }
 
 
@@ -226,6 +245,11 @@ ApplicationWindow {
                              internal.ifMaximisedWindowRestore()
                          }
     }
+
+
+    // ensure that the application starts with the network configuration screen
+    Component.onCompleted: swipeview.setCurrentIndex(2)
+
 
     Rectangle {
         id: appContainer
@@ -275,7 +299,7 @@ ApplicationWindow {
                 }
                 intBtnTagTable.onClicked: swipeview.setCurrentIndex(1)
 
-                intBtnSettings.onClicked: swipeview.setCurrentIndex(4)
+                // intBtnSettings.onClicked: swipeview.setCurrentIndex(4)
             }
 
             Rectangle {
@@ -294,7 +318,6 @@ ApplicationWindow {
                 radius: 10
 
 
-                // SplitView{}
                 ColumnLayout{
                     id: col
                     spacing: 1
@@ -310,49 +333,74 @@ ApplicationWindow {
                             id: overviewpage
                             height: parent.height
                         }
+
                         TagTable{
                             id: tagtable
                         }
-                        PlotPage{
-                            id:plotpage
-                        }
+
                         NetworkConnectionPage{
                             id: networkPage
+
+                            // connect.onClicked: {
+                            //     if(appmanager.heartbeat){
+                            //         maintopbar.connection_status = "Connected to " +appmanager.remoteIPAddress +
+                            //                                         " via port: " + appmanager.remotePort
+                            //         networkPage.connect.enabled = false
+                            //         networkPage.disconnect.enabled = true
+                            //     }else{
+                            //         maintopbar.connection_status = "Reconnecting ..."
+                            //     }
+
+                            // }
+                            // disconnect.onClicked: {
+                            //     maintopbar.connection_status = "No active connections"
+                            //     networkPage.disconnect.enabled = false
+                            //     networkPage.connect.enabled = true
+                            // }
                         }
+
                         TagBindings{
                             id: tagbindings
-                            // enabled: false
+                            enabled: false
                             Component.onCompleted: {
-                                // Start DFS from the parentItem
-                                var dfsResult = internal.getChildrenNames(dashboard)
+                                // Start DFS from the parentItem. This will no longer be used
+                                // var dfsResult = internal.getChildrenNames(dashboard)
                                 // console.log("DFS result:", dfsResult)
-                                objList.model = dfsResult;
+
+                                var controlObjects = ["digitalGuage1","digitalGuage2", "digitalGuage3",
+                                                      "digitalGuage4","digitalGuage5","digitalGuage6",
+                                                      "digitalGuage7", "helperGuage", "clearFaultsBtn",
+                                                      "startStopSw", "speedTextInput", "faultrect"]
+
+                                guiObjComboBox.model = controlObjects;
 
                             }
 
+                            //TODO
                             bind.onClicked: {
-
-                                var obj = internal.findChild(dashboard, objList.currentText)
+                                // create a Command and add it to the list of bound commands in the backend
+                                // var obj = internal.findChild(dashboard, guiObjComboBox.currentText)
                                 if(write.checked){
-                                    udpworker.addCommand(varlist.currentText, objList.currentText, "write")
+                                    udpworker.addCommand(varlist.currentText, guiObjComboBox.currentText, "write")
+                                    bindingmodel.addBinding(guiObjComboBox.currentText, varlist.currentText,"write" )
                                 }else if(read.checked){
-                                    if(obj){
-                                        obj.measuredvalue = udpworker.vmap[varlist.currentText]
-                                    }else{
-                                        console.log("Select a valid GUI object")
-                                    }
+                                    bindingmodel.addBinding(guiObjComboBox.currentText, varlist.currentText,"read" )
+                                }
+                                else if(unused.checked){
+                                    bindingmodel.addBinding(guiObjComboBox.currentText, varlist.currentText,"unused" )
                                 }
                             }
                         }
 
                     }
+
                     PageIndicator{
                         id: pageindicator
                         currentIndex: swipeview.currentIndex
                         count: swipeview.count
                         Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
-                        // z:1
                     }
+
                     DashBoard {
                         id: dashboard
                         Layout.preferredWidth: contentPages.width
@@ -405,7 +453,7 @@ ApplicationWindow {
           }
       }
 
-       MouseArea {
+      MouseArea {
            id: resizeLeft
            width: 10
            anchors.left: parent.left
@@ -424,7 +472,7 @@ ApplicationWindow {
            }
        }
 
-       MouseArea {
+      MouseArea {
            id: diagResize
            x: 881
            y: 0

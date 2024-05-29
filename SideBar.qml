@@ -7,10 +7,10 @@ Item {
     property alias animate: animationMenu
     property alias intwidth: leftMenu.width
 
-    property alias intBtnPlot : btnPlot
+    property alias intBtnPlot : btnNetworking
     property alias intBtnConfig : btnConfig
     property alias intBtnHome : btnHome
-    property alias intBtnSettings: btnSettings
+    // property alias intBtnSettings: btnSettings
     property alias intBtnTagTable: btnTagTable
 
     Rectangle {
@@ -70,9 +70,8 @@ Item {
                 btnIconSource: "qrc:/images/images/svg_images/home_icon.svg"
                 onClicked: {
                     btnHome.isActiveMenu = true
-                    btnPlot.isActiveMenu = false
+                    btnNetworking.isActiveMenu = false
                     btnConfig.isActiveMenu = false
-                    btnSettings.isActiveMenu = false
                     btnTagTable.isActiveMenu=false
                     // stackView.push(Qt.resolvedUrl(
                     //                    "pages/homePage.qml"))
@@ -95,19 +94,18 @@ Item {
                 onClicked: {
                     btnHome.isActiveMenu = false
                     btnConfig.isActiveMenu = false
-                    btnPlot.isActiveMenu = false
-                    btnSettings.isActiveMenu = false
+                    btnNetworking.isActiveMenu = false
                     btnTagTable.isActiveMenu = true
                     // StackView.currentItem =
                 }
             }
 
             LefMenuBtn {
-                id: btnPlot
+                id: btnNetworking
                 width: leftMenu.width
                 height: 60
-                text: qsTr("Plots")
-                btnIconSource: "qrc:/images/images/svg_images/icons8-plot-100.png"
+                text: qsTr("Networking")
+                btnIconSource: "qrc:/images/images/svg_images/settings_icon.svg"
                 isActiveMenu: false
                 display: AbstractButton.TextOnly
                 btnColorClicked: "#012721"
@@ -116,9 +114,8 @@ Item {
                 onClicked: {
                     btnHome.isActiveMenu = false
                     btnConfig.isActiveMenu = false
-                    btnPlot.isActiveMenu = true
-                    btnSettings.isActiveMenu = false
-                     btnTagTable.isActiveMenu=false
+                    btnNetworking.isActiveMenu = true
+                    btnTagTable.isActiveMenu=false
                     // stackView.push(Qt.resolvedUrl("pages/settingsPage.qml"))
                     //pagesView.setSource("pages/settingsPage.qml")
                 }
@@ -139,8 +136,7 @@ Item {
                 onClicked: {
                     btnHome.isActiveMenu = false
                     btnConfig.isActiveMenu = true
-                    btnPlot.isActiveMenu = false
-                    btnSettings.isActiveMenu = false
+                    btnNetworking.isActiveMenu = false
                      btnTagTable.isActiveMenu=false
                     // StackView.currentItem =
                 }
@@ -150,30 +146,30 @@ Item {
         }
     }
 
-    LefMenuBtn {
-        id: btnSettings
-        x: 0
-        y: 180
-        width: leftMenu.width
-        height: 60
-        text: qsTr("Settings")
-        btnIconSource: "qrc:/images/images/svg_images/settings_icon.svg"
-        clip: true
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 25
-        isActiveMenu: false
-        display: AbstractButton.TextOnly
-        btnColorClicked: "#012721"
-        btnColorMouseOver: "#038874"
-        btnColorDefault: "transparent"
+    // LefMenuBtn {
+    //     id: btnSettings
+    //     x: 0
+    //     y: 180
+    //     width: leftMenu.width
+    //     height: 60
+    //     text: qsTr("Settings")
+    //     btnIconSource: "qrc:/images/images/svg_images/settings_icon.svg"
+    //     clip: true
+    //     anchors.bottom: parent.bottom
+    //     anchors.bottomMargin: 25
+    //     isActiveMenu: false
+    //     display: AbstractButton.TextOnly
+    //     btnColorClicked: "#012721"
+    //     btnColorMouseOver: "#038874"
+    //     btnColorDefault: "transparent"
 
-        onClicked: {
-            btnHome.isActiveMenu = false
-            btnConfig.isActiveMenu = false
-            btnPlot.isActiveMenu = false
-            btnSettings.isActiveMenu = true
-            // stackView.push(Qt.resolvedUrl("pages/settingsPage.qml"))
-            //pagesView.setSource("pages/settingsPage.qml")
-        }
-    }
+    //     onClicked: {
+    //         btnHome.isActiveMenu = false
+    //         btnConfig.isActiveMenu = false
+    //         btnPlot.isActiveMenu = false
+    //         btnSettings.isActiveMenu = true
+    //         // stackView.push(Qt.resolvedUrl("pages/settingsPage.qml"))
+    //         //pagesView.setSource("pages/settingsPage.qml")
+    //     }
+    // }
 }

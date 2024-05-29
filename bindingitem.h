@@ -7,27 +7,27 @@ class BindingItem : public QObject{
 
     QString m_objName;
     QString m_tagname;
-    bool m_readwrite;
+    QString m_readwrite;
 
     Q_OBJECT
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(QString tag READ tag WRITE setTag NOTIFY tagChanged)
-    Q_PROPERTY(QString readWrite READ readWrite WRITE setReadWrite NOTIFY readWritesChanged)
+    Q_PROPERTY(QString readWrite READ readWrite WRITE setReadWrite NOTIFY readWriteChanged)
 
 public:
     explicit BindingItem(QObject *parent = nullptr);
 
     BindingItem(const QString &name,
                 const QString &tag,
-                const bool &readWrite,
+                const QString &readWrite,
                 QObject *parent=nullptr);
 
     QString name() const;
     void setName(const QString &name);
     QString tag() const;
     void setTag(const QString &tag);
-    bool readWrite() const;
-    void setReadWrite(const bool &readWrite);
+    QString readWrite() const;
+    void setReadWrite(const QString &readWrite);
 
 signals:
     void nameChanged();

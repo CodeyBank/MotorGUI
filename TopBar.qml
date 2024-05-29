@@ -6,12 +6,13 @@ import QtQuick.Window 2.12
 
 Item {
 
-    property string connection_status: "No active connections"
+    property string status: "No active connections"
     property string current_page_topbar: "| OVERVIEW"
     property alias intbtn : internalbtn
     property alias intclose : btnClose
     property alias intmaxrestore: btnMaximizeRestore
     property alias intminimize: btnMinimize
+    property alias connection_status: labelTopInfo.text
 
     Rectangle {
         id: topBar
@@ -48,7 +49,7 @@ Item {
             Label {
                 id: labelTopInfo
                 color: "#707d99"
-                text: connection_status
+                text: "No active connections"
                 font.family: "Montserrat"
                 font.pointSize: 10
                 verticalAlignment: Text.AlignVCenter

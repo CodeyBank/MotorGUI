@@ -7,6 +7,7 @@
 #include "udpworker.h"
 #include "appmanger.h"
 #include "memorymodel.h"
+#include "bindingmodel.h"
 // #include "QtWebEngine"
 
 int main(int argc, char *argv[])
@@ -20,6 +21,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<AppManger>("com.futureelctronics.appmanager",1,0,"AppManger");
     qmlRegisterType<MemoryModel>("com.futureelctronics.memorymodel",1,0,"MemoryModel");
     qmlRegisterType<ModelManager>("com.futureelctronics.modelmanager",1,0,"ModelManager");
+    qmlRegisterType<BindingModel>("com.futureelctronics.bindingmodel",1,0,"BindingModel");
 
 
     QGuiApplication app(argc, argv);

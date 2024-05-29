@@ -5,7 +5,7 @@ BindingItem::BindingItem(QObject *parent) :QObject(parent){}
 
 BindingItem::BindingItem(const QString &name,
                          const QString &tag,
-                         const bool &readWrite,
+                         const QString &readWrite,
                          QObject *parent)
     : QObject(parent),
     m_objName(name),
@@ -27,48 +27,23 @@ void BindingItem::setName(const QString &name)
     }
 }
 
-// QString BindingItem::attribute() const
-// {
-//     return m_attribute;
-// }
+QString BindingItem::tag() const
+{
+    return m_tagname;
+}
 
-// void BindingItem::setAttribute(const QString &attribute)
-// {
-//     if(m_attribute != attribute){
-//         m_attribute = attribute;
-//         emit attributeChanged();
-//     }
+void BindingItem::setTag(const QString &tag)
+{
+    m_tagname = tag;
+}
 
-// }
+QString BindingItem::readWrite() const
+{
+    return m_readwrite;
+}
 
-// QString BindingItem::type() const
-// {
-//     return m_type;
-// }
-
-// void BindingItem::setType(const QString &type)
-// {
-//     if(m_type != type){
-//         m_type = type;
-//         emit typeChanged();
-//     }
-// }
-
-// QString BindingItem::tag() const
-// {
-//     return tagname;
-// }
-
-// void BindingItem::setSize(const qint8 &size)
-// {
-//     if(m_size != size){
-//         m_size = size;
-//         emit sizeChanged();
-//     }
-// }
-
-// QString BindingItem::address() const
-// {
-//     return m_address;
-// }
+void BindingItem::setReadWrite(const QString &readWrite)
+{
+    m_readwrite = readWrite;
+}
 

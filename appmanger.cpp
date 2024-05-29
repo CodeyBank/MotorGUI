@@ -109,21 +109,18 @@ void AppManger::setAllAddressAndPorts(QList<QList<QString>> config_addresses)
     startUdpCommunication();
 }
 
+void AppManger::disconnect()
+{
+    pingProcess->terminate();
+    alive = false;
+    emit remoteHeartBeatChanged(alive);
+    qInfo()<<"Closed connection";
+}
+
 void AppManger::ping()
 {
     testRemoteDevice(remoteIPAddr);
 }
-
-void AppManger::updateMemoryTable()
-{
-
-}
-
-void AppManger::updateVariableView(QString record_name)
-{
-
-}
-
 
 bool AppManger::isValidPort(QString str_port)
 {
@@ -160,13 +157,9 @@ bool AppManger::isValidIPAddress(QString str_ipAddr)
 
 void AppManger::testRemoteDevice(QString ip_addr)
 {
-    qInfo()<<ip_addr;
-
     QStringList arguments;
     arguments << "-n" << "1"<<"-l" << "1" << ip_addr;
     pingProcess->start("ping", arguments);
-
-
 }
 
 QList<QString> AppManger::getLocalInterfaces()
@@ -227,10 +220,10 @@ void AppManger::stopUdpCommunication()
     udpWorkerThread->exit(0);
 }
 
-
 void AppManger::saveSettings()
 {
     QString filename = QCoreApplication::applicationDirPath() + "/settings.ini";
+    qInfo()<<filename;
     QSettings settings(filename, QSettings::Format::IniFormat,this);
 
     settings.setValue("localPort",QVariant(localPort));

@@ -25,18 +25,23 @@ public:
     };
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-    int columnCount(const QModelIndex &parent)const override;
-    QModelIndex index(int row, int column, const QModelIndex &parent) const override;
+    int columnCount(const QModelIndex &parent= QModelIndex())const override;
+    QModelIndex index(int row, int column, const QModelIndex &parent=QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QModelIndex parent(const QModelIndex &index) const override ;
     QHash<int, QByteArray> roleNames() const override;
 
 
 public slots:
-    void updateData(const QString &name,
+    void addBinding(const QString &name,
                     const QString &tag,
-                    const quint8 &readwrite);
-    // void receiveNewData(QVariantMap &data);
+                    const QString &readwrite);
+
+    void modifyBinding(int row,
+                       const QString &name,
+                       const QString &tag,
+                       const QString &readwrite);
+
 private:
     QList<BindingItem*> m_data;
 

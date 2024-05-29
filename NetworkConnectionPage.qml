@@ -530,6 +530,7 @@ Item {
                         id: roundButton1
                         text: "Connect"
                         Layout.preferredWidth: 100
+                        enabled: false
                         onClicked: {
                             // send all the data on the gui to the back end
                             appmanager.localIPAddress = localIPaddressField.text
@@ -543,6 +544,14 @@ Item {
                             udpworker.remotePort = remotePortField.text
                             udpworker.start()
                             appmanager.saveSettings()
+                            if(appmanager.heartbeat){
+                                maintopbar.connection_status = "Connected to " +appmanager.remoteIPAddress +
+                                                                " via port: " + appmanager.remotePort
+                                networkPage.connect.enabled = false
+                                networkPage.disconnect.enabled = true
+                            }else{
+                                maintopbar.connection_status = "Reconnecting ..."
+                            }
                         }
                     }
 
@@ -551,9 +560,14 @@ Item {
                         text: "Disconnect"
                         Layout.preferredWidth: 100
                         Layout.fillWidth: false
+                        enabled: false
                         onClicked: {
                             udpworker.stop()
                             // memorymodel.clear()
+                            maintopbar.connection_status = "No active connections"
+                            networkPage.disconnect.enabled = false
+                            networkPage.connect.enabled = true
+                            appmanager.disconnect()
                         }
                     }
                 }

@@ -39,10 +39,6 @@ Item {
                     title: "Value"
                     role: "value"
                 }
-
-               Component.onCompleted: {
-                   console.log(memorymodel.columnCount())
-               }
             }
     }
 }

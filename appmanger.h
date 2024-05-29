@@ -39,13 +39,8 @@ class AppManger : public QObject
 public:
     explicit AppManger(QObject *parent = nullptr, MemoryModel * model = nullptr);
 
-    // AppManger(UDPWorker *udp, QThread *udp_worker_thread);
-
-    void updateMemoryTable(void);
-    void updateVariableView(QString record_name);
     QString readVariableValue(QString var_name);
     void writeVariableValue(QString var_name);
-
 
     UDPWorker *udp;
     QThread * udpWorkerThread;
@@ -91,6 +86,7 @@ public slots:
     bool loadSettings();
     void saveSettings();
     void setAllAddressAndPorts(QList<QList<QString>> config_addresses);
+    void disconnect();
 
 };
 

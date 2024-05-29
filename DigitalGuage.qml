@@ -91,6 +91,7 @@ Item {
         intBind.onClicked: {
             unit = intUnit.text
             variablename = intAlias.text
+            bindingmodel.addBinding(intHeading.text, intTaglist.currentText, "read" )
         }
     }
 
