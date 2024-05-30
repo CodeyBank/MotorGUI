@@ -1,5 +1,5 @@
 QT += quick gui core
-
+RC_ICONS = future-logo.ico
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
@@ -9,6 +9,7 @@ SOURCES += \
         bindingitem.cpp \
         bindingmodel.cpp \
         customdatamodel.cpp \
+        logger.cpp \
         main.cpp \
         memorymodel.cpp \
         modelmanager.cpp \
@@ -39,6 +40,7 @@ HEADERS += \
     bindingitem.h \
     bindingmodel.h \
     customdatamodel.h \
+    logger.h \
     memorymodel.h \
     modelmanager.h \
     #pingmanager.h \

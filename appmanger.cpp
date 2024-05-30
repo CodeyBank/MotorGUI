@@ -222,7 +222,8 @@ void AppManger::stopUdpCommunication()
 
 void AppManger::saveSettings()
 {
-    QString filename = QCoreApplication::applicationDirPath() + "/settings.ini";
+    // QString filename = QCoreApplication::applicationDirPath() + "/settings.ini";
+    QString filename = QDir::currentPath() + QDir::separator() + "settings.ini";
     qInfo()<<filename;
     QSettings settings(filename, QSettings::Format::IniFormat,this);
 
@@ -246,7 +247,8 @@ bool AppManger::loadSettings()
         returns: True if at five values are saved setting is saved;
     */
     QMap<QString, QString> returnValue;
-    QString filename = QCoreApplication::applicationDirPath() + "/settings.ini";
+    // QString filename = QCoreApplication::applicationDirPath() + "/settings.ini";
+    QString filename = QDir::currentPath() + QDir::separator() + "settings.ini";
     QSettings settings(filename, QSettings::Format::IniFormat,this);
     // retrieve the keys
     QStringList keys=settings.allKeys();

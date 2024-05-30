@@ -2,7 +2,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-
+#include "logger.h"
 #include "modelmanager.h"
 #include "udpworker.h"
 #include "appmanger.h"
@@ -25,7 +25,8 @@ int main(int argc, char *argv[])
 
 
     QGuiApplication app(argc, argv);
-
+    Logger::attach();
+    Logger::logging = true;
     QQmlApplicationEngine engine;
 
     // MemoryModel

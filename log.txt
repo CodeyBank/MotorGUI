@@ -1,0 +1,11 @@
+Thu May 30 10:55:05 2024 - Info: App manager instantiatedat  line: 0
+Thu May 30 10:55:11 2024 - Info: void __cdecl UDPWorker::start(void) QThread(0x235a8238620)at  line: 0
+Thu May 30 10:55:11 2024 - Info: Started UDP on QHostAddress("192.1.1.5") : 1234at  line: 0
+Thu May 30 10:55:11 2024 - Info: Requesting to load table 
+CMD: "+\t\x00\x00\x00\xB1\x00\x00\x00\x00\x00-5\x02\x00"at  line: 0
+Thu May 30 10:55:11 2024 - Info: Sending data to  "192.1.1.2"  and port  3454 from IP:  "192.1.1.5"  and port  1234 
+at  line: 0
+Thu May 30 10:55:11 2024 - Info: "C:/Users/Stanley.Ezeh/Documents/QT Projects/MotorGUI/MotorGUI\\settings.ini"at  line: 0
+Thu May 30 10:55:11 2024 - Info: Saved settingsat  line: 0
+Thu May 30 10:59:28 2024 - Warning: QProcess: Destroyed while process ("ping") is still running.at  line: 0
+Thu May 30 11:47:16 2024 - Info: App manager instantiatedat  line: 0
